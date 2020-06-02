@@ -1,0 +1,20 @@
+{
+  "name": "exercise9",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-node": "ts-node",
+    "calculator": "ts-node calculator.ts",
+    "multiplicator": "ts-node multiplicator.ts",
+    "calculateBmi": "ts-node bmiCalculator.ts"
+  },
+  "author": "banaanihillo",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.0.9",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.3"
+  }
+}

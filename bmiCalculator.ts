@@ -3,15 +3,11 @@ interface CalculateBMI {
     mass: number;
 }
 
-const parseBMIArguments = (args: Array<string>): CalculateBMI => {
-    if (args.length < 4 || args.length > 4) {
-        throw new Error("Calculation of BMI requires exactly two arguments.");
-    }
-
-    if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+export const parseBMIArguments = (height: number, mass: number): CalculateBMI => {
+    if (!isNaN(Number(height)) && !isNaN(Number(mass))) {
         return {
-            height: Number(args[2]),
-            mass: Number(args[3])
+            height: Number(height),
+            mass: Number(mass)
         }
     } else {
         throw new Error("The arguments should be numbers: height in cm, mass in kg.");
@@ -35,10 +31,15 @@ const calculateBmi = (
 }
 
 //console.log(calculateBmi(180, 74));
-
+/*
 try {
-    const {height, mass} = parseBMIArguments(process.argv);
+    const {height, mass} = parseBMIArguments(
+        Number(process.argv[2]),
+        Number(process.argv[3])
+    );
     console.log(calculateBmi(height, mass));
 } catch (error) {
     console.log(error)
 }
+*/
+export default calculateBmi

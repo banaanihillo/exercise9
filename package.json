@@ -8,7 +8,8 @@
     "ts-node": "ts-node",
     "calculator": "ts-node calculator.ts",
     "multiplicator": "ts-node multiplicator.ts",
-    "calculateBmi": "ts-node bmiCalculator.ts"
+    "calculateBmi": "ts-node bmiCalculator.ts",
+    "calculateExercises": "ts-node exerciseCalculator.ts"
   },
   "author": "banaanihillo",
   "license": "ISC",

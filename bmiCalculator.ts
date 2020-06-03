@@ -14,7 +14,7 @@ const parseBMIArguments = (args: Array<string>): CalculateBMI => {
             mass: Number(args[3])
         }
     } else {
-        throw new Error("The arguments should be numbers: height in cm, mass in kg.")
+        throw new Error("The arguments should be numbers: height in cm, mass in kg.");
     }
 }
 
@@ -34,4 +34,11 @@ const calculateBmi = (
     }
 }
 
-console.log(calculateBmi(180, 74));
+//console.log(calculateBmi(180, 74));
+
+try {
+    const {height, mass} = parseBMIArguments(process.argv);
+    console.log(calculateBmi(height, mass));
+} catch (error) {
+    console.log(error)
+}

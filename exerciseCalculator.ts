@@ -56,6 +56,8 @@ const calculateExercises = (
                 return "Looking good, keep it up!";
             case 3:
                 return "Great work! Remember to take a day off every now and then.";
+            default:
+                return "what are you doing here";
         }
     }
 

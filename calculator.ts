@@ -30,3 +30,5 @@ try {
 } catch (exception) {
     console.log(`Operation failed: ${exception.message}`);
 }
+
+export default calculator

@@ -1,5 +1,6 @@
 import express from "express";
-import calculateBmi, {parseBMIArguments} from "./bmiCalculator"
+import calculateBmi, {parseBMIArguments} from "./bmiCalculator";
+//import calculator from "./calculator";
 const app = express();
 
 app.get("/ping", (_request, response) => {
@@ -28,7 +29,13 @@ app.get("/bmi", (request, response) => {
         bmi: calculateBmi(inputForBMI.height, inputForBMI.mass)
     })
 });
-
+/*
+app.get("/calculate", (request, response) => {
+    const {operand1, operand2, operation} = request.query;
+    const calculation = calculator(Number(operand1), Number(operand2), operation);
+    response.send(calculation);
+})
+*/
 const PORT = 3003;
 
 app.listen(PORT, () => {

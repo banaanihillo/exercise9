@@ -8,18 +8,21 @@ interface TrainingSummary {
     averageHours: number
 }
 
-const parseTargetHours = (targetHourInput: string): number => {
-    if (process.argv.length < 4) {
-        throw new Error("The program needs at least two arguments to work.")
+export const parseTargetHours = (targetHourInput: number): number => {
+    if (!targetHourInput) {
+        throw new Error("The parameter for target hours is missing.")
     }
     if (!isNaN(Number(targetHourInput))) {
         return Number(targetHourInput);
     } else {
-        throw new Error("The first argument should be a number, for the target hours.");
+        throw new Error("The target hour parameter should be a number.");
     }
 }
 
-const parseExerciseHours = (exerciseHourInput: Array<string>) : Array<number> => {
+export const parseExerciseHours = (exerciseHourInput: Array<string>) : Array<number> => {
+    if (!exerciseHourInput) {
+        throw new Error("The exercise hour parameters are missing.")
+    }
     const exerciseHours = exerciseHourInput.map(hours => {
         if (!isNaN(Number(hours))) {
             return Number(hours);
@@ -71,7 +74,7 @@ const calculateExercises = (
         averageHours: averageHours
     }
 }
-
+/*
 try {
     const targetHourInput = parseTargetHours(process.argv[2]);
     const exerciseHourInput = parseExerciseHours(process.argv.slice(3));
@@ -79,3 +82,5 @@ try {
 } catch (error) {
     console.log(error);
 }
+*/
+export default calculateExercises

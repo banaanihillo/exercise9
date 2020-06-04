@@ -1,7 +1,11 @@
 import express from "express";
 import calculateBmi, {parseBMIArguments} from "./bmiCalculator";
-//import calculator from "./calculator";
+import calculateExercises, {
+    parseTargetHours,
+    parseExerciseHours
+} from "./exerciseCalculator";
 const app = express();
+app.use(express.json());
 
 app.get("/ping", (_request, response) => {
     response.send("pong");
@@ -29,13 +33,27 @@ app.get("/bmi", (request, response) => {
         bmi: calculateBmi(inputForBMI.height, inputForBMI.mass)
     })
 });
-/*
-app.get("/calculate", (request, response) => {
-    const {operand1, operand2, operation} = request.query;
-    const calculation = calculator(Number(operand1), Number(operand2), operation);
-    response.send(calculation);
+
+app.post("/exercises", (request, response) => {
+    let targetInput = request.body.target;
+    let hourInput = request.body.daily_exercises;
+    if (!targetInput || !hourInput) {
+        return response.status(400).json({
+            error: "Looks like some parameters are missing."
+        })
+    }
+    try {
+        targetInput = parseTargetHours(targetInput);
+        hourInput = parseExerciseHours(hourInput);
+    } catch (error) {
+        return response.status(400).json({
+            error: "Make sure the target is a number, and the hours an array of numbers."
+        })
+    }
+    
+    return response.json(calculateExercises(targetInput, hourInput));
 })
-*/
+
 const PORT = 3003;
 
 app.listen(PORT, () => {

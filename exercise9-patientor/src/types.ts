@@ -28,3 +28,5 @@ export interface Patient {
     gender: Gender;
     occupation: string;
 }
+
+export type SecurePatient = Omit<Patient, "ssn">;

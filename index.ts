@@ -4,10 +4,12 @@ import calculateExercises, {
     parseTargetHours,
     parseExerciseHours
 } from "./exerciseCalculator";
+const cors = require("cors");
 const app = express();
 app.use(express.json());
+app.use(cors());
 
-app.get("/ping", (_request, response) => {
+app.get("/api/ping", (_request, response) => {
     response.send("pong");
 });
 
@@ -54,7 +56,7 @@ app.post("/exercises", (request, response) => {
     return response.json(calculateExercises(targetInput, hourInput));
 })
 
-const PORT = 3003;
+const PORT = 3001;
 
 app.listen(PORT, () => {
     console.log(`The server is running on port ${PORT}.`);

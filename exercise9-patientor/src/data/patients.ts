@@ -1,6 +1,7 @@
 import {Patient} from "../types";
+import {parsePatientInput} from "../utils";
 
-const patients: Array<Patient> = [
+const patients = [
     {
         "id": "7a8f6fa7f6897a6faf567af56a7f57s657s",
         "name": "John McClane",
@@ -51,4 +52,10 @@ const patients: Array<Patient> = [
     }
 ]
 
-export default patients;
+const listOfPatients: Patient[] = patients.map(patient => {
+    const patientObject = parsePatientInput(patient) as Patient;
+    patientObject.id = patient.id;
+    return patientObject;
+})
+
+export default listOfPatients;

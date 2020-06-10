@@ -1,5 +1,6 @@
 import express from "express";
 import patientService from "../services/patientService";
+import {parsePatientInput} from "../utils";
 
 const patientRouter = express.Router();
 
@@ -11,13 +12,10 @@ patientRouter.post("/", (request, response) => {
     try {
         const patientInput = {
             id: (Math.floor(Math.random() * 1000000) + "bananas"),
-            name: request.body.name,
-            dateOfBirth: request.body.dateOfBirth,
-            ssn: request.body.ssn,
-            gender: request.body.gender,
-            occupation: request.body.occupation
+            ...request.body
         }
-        const newPatient = patientService.addPatient(patientInput);
+        const parsedPatientInput = parsePatientInput(patientInput);
+        const newPatient = patientService.addPatient(parsedPatientInput);
         response.json(newPatient);
     } catch (error) {
         response.status(400).send(error.message);

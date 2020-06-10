@@ -1,5 +1,5 @@
 //eslint-disable @typescript-eslint/no-explicit-any
-import {NewDiaryEntry, Weather, Visibility} from "./types";
+import {NewDiaryEntry, Weather, Visibility, Gender, Patient} from "./types";
 
 const parseComment = (comment: any): string => {
     if (!comment || !isString(comment)) {
@@ -43,6 +43,35 @@ const parseVisibility = (visibility: any): Visibility => {
         throw new Error(`The parameter "${visibility}" is invalid for Visibility`);
     }
     return visibility;
+}
+
+const parseString = (stringInput: any): string => {
+    if (!stringInput || !isString(stringInput)) {
+        throw new Error(`The parameter "${stringInput}" should be a string.`)
+    }
+    return stringInput;
+}
+
+const isGender = (genderParameter: any): genderParameter is Gender => {
+    return Object.values(Gender).includes(genderParameter);
+}
+
+const parseGender = (gender: any): Gender => {
+    if (!gender || !isGender(gender)) {
+        throw new Error(`The parameter "${gender}" does not fit the gender criteria.`)
+    }
+    return gender;
+}
+
+export const parsePatientInput = (patientInput: any): Patient => {
+    return {
+        id: patientInput.id,
+        name: parseString(patientInput.name),
+        dateOfBirth: parseDate(patientInput.dateOfBirth),
+        gender: parseGender(patientInput.gender),
+        occupation: parseString(patientInput.occupation),
+        ssn: parseString(patientInput.ssn)
+    }
 }
 
 const toNewDiaryEntry = (diaryInput: any): NewDiaryEntry => {

@@ -1,6 +1,7 @@
 import {DiaryEntry} from "../types";
+import toNewDiaryEntry from "../utils";
 
-const diaryEntries: Array<DiaryEntry> = [
+const diaryData = [
     {
         "id": 1,
         "date": "2017-01-01",
@@ -30,5 +31,11 @@ const diaryEntries: Array<DiaryEntry> = [
         "comment": "I almost failed the landing but I survived"
     }
 ]
+
+const diaryEntries: DiaryEntry[] = diaryData.map(object => {
+    const diaryObject = toNewDiaryEntry(object) as DiaryEntry
+    diaryObject.id = object.id
+    return diaryObject
+})
 
 export default diaryEntries;

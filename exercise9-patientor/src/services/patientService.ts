@@ -1,5 +1,5 @@
 import patients from "../data/patients";
-import {SecurePatient} from "../types";
+import {SecurePatient, Patient} from "../types";
 
 const getSecureEntries = (): SecurePatient[] => {
     return patients.map(({id, name, dateOfBirth, gender, occupation}) => ({
@@ -11,6 +11,12 @@ const getSecureEntries = (): SecurePatient[] => {
     }))
 };
 
+const addPatient = (newPatient: Patient): Patient => {
+    patients.push(newPatient);
+    return newPatient;
+}
+
 export default {
-    getSecureEntries
+    getSecureEntries,
+    addPatient
 };

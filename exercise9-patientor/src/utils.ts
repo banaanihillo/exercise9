@@ -70,7 +70,8 @@ export const parsePatientInput = (patientInput: any): Patient => {
         dateOfBirth: parseDate(patientInput.dateOfBirth),
         gender: parseGender(patientInput.gender),
         occupation: parseString(patientInput.occupation),
-        ssn: parseString(patientInput.ssn)
+        ssn: parseString(patientInput.ssn),
+        entries: []
     }
 }
 

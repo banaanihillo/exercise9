@@ -42,8 +42,13 @@ export interface Patient {
     ssn: string;
     gender: Gender;
     occupation: string;
+    entries: Entry[];
 }
 
 export type SecurePatient = Omit<Patient, "ssn">;
 
 export type NewDiaryEntry = Omit<DiaryEntry, "id">;
+
+export interface Entry {
+    
+}

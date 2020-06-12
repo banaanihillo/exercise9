@@ -1,7 +1,7 @@
 import React from "react";
-import Course from "../types";
+import {CoursePart} from "../types";
 
-const Total: React.FunctionComponent<{courseParts: Course[]}> = (props) => {
+const Total: React.FunctionComponent<{courseParts: CoursePart[]}> = (props) => {
     const {courseParts} = props;
     return (
         <div>

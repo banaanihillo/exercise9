@@ -25,6 +25,10 @@ const Part: React.FunctionComponent<{coursePart: CoursePart}> = (props) => {
                         Something: {coursePart.typeType}
                     </li>
                 </span>
+            default:
+                return <li>
+                    Includes a part of the course that may or may not yet be defined
+                </li>
         }
     }
     

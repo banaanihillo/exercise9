@@ -20,15 +20,15 @@ const addPatient = (newPatient: Patient): Patient => {
     return newPatient;
 }
 
-const getSecurePatient = (id: string): SecurePatient => {
-    let securePatient
+const getPatientInformation = (id: string): Patient => {
+    let expandedPatient
     try {
-        securePatient = getSecureEntries().find(patient => patient.id === id)
+        expandedPatient = patients.find(patient => patient.id === id)
     } catch (error) {
         throw new Error("No patients found with the given id");
     }
-    if (securePatient) {
-        return securePatient;
+    if (expandedPatient) {
+        return expandedPatient;
     } else {
         throw new Error("what are you doing here")
     }
@@ -37,5 +37,5 @@ const getSecurePatient = (id: string): SecurePatient => {
 export default {
     getSecureEntries,
     addPatient,
-    getSecurePatient
+    getPatientInformation
 };

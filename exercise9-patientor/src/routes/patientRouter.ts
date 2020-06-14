@@ -23,7 +23,7 @@ patientRouter.post("/", (request, response) => {
 })
 
 patientRouter.get("/:id", (request, response) => {
-    response.send(patientService.getSecurePatient(request.params.id))
+    response.send(patientService.getPatientInformation(request.params.id))
 })
 
 export default patientRouter;

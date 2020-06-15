@@ -7,9 +7,9 @@ import {useStateValue} from "./state";
 import {Patient} from "./types";
 import PatientListPage from "./PatientListPage";
 import IndividualPatient from "./PatientListPage/IndividualPatient"
+import {setPatientList} from "./state/reducer"
 
-const App: React.FC = () => {
-    
+const App: React.FunctionComponent = () => {
     const [, dispatch] = useStateValue();
     React.useEffect(() => {
         axios.get<void>(`${url}/ping`);
@@ -19,7 +19,7 @@ const App: React.FC = () => {
                 const { data: patientListFromApi } = await axios.get<Patient[]>(
                     `${url}/patients`
                 );
-                dispatch({ type: "SET_PATIENT_LIST", payload: patientListFromApi });
+                dispatch(setPatientList(patientListFromApi));
             } catch (error) {
                 console.error(error);
             }

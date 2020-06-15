@@ -4,6 +4,7 @@ import axios from "axios";
 import {apiBaseUrl} from "../constants";
 import {Patient, PatientProps} from "../types";
 import {useStateValue} from "../state";
+import {expandPatient} from "../state/reducer";
 
 const IndividualPatient:React.FunctionComponent<
     RouteComponentProps<PatientProps>
@@ -21,7 +22,7 @@ const IndividualPatient:React.FunctionComponent<
                 .get<Patient>(`${apiBaseUrl}/patients/${match.params.id}`)
                 .then(result => {
                     const individualPatient = result.data;
-                    dispatch({type: "EXPAND_PATIENT", payload: individualPatient});
+                    dispatch(expandPatient(individualPatient));
                 })
         } catch (error) {
             console.log("Something went wrong somewhere or everywhere")

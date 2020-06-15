@@ -101,7 +101,7 @@ const patients: Patient[] = [
                 description: `
                     Yearly control visit.
                     Due to high cholesterol levels,
-                    recommended to ea more vegetables.
+                    recommended to eat more vegetables.
                 `,
                 healthCheckRating: 1
             }

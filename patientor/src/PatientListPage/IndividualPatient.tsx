@@ -5,6 +5,7 @@ import {apiBaseUrl} from "../constants";
 import {Patient, PatientProps} from "../types";
 import {useStateValue} from "../state";
 import {expandPatient} from "../state/reducer";
+import EntryDetails from "./EntryDetails";
 
 const IndividualPatient:React.FunctionComponent<
     RouteComponentProps<PatientProps>
@@ -69,9 +70,10 @@ const IndividualPatient:React.FunctionComponent<
                 : expandedPatientInformation.entries.map(entry =>
                     <span key = {entry.id}>
                         <h4> {entry.date} </h4>
+                        <EntryDetails entry = {entry} />
                         <p> {entry.description} </p>
                         { (entry.diagnosisCodes === undefined)
-                            ? <p> No diagnoses to show. </p>
+                            ? <br />
                             : entry.diagnosisCodes.map(diagnosisCode =>
                                 <li key = {diagnosisCode}>
                                     {getDiagnosis(diagnosisCode)}

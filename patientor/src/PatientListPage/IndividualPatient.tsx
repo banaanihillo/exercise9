@@ -28,6 +28,32 @@ const IndividualPatient:React.FunctionComponent<
             console.log("Something went wrong somewhere or everywhere")
         }
     }, [dispatch, match.params.id, state.patients])
+
+    const getDiagnosis = (diagnosisCode: string) => {
+        const extendedDiagnosisInformation = Object.values(state.diagnoses).find(info =>
+            info.code === diagnosisCode
+        )
+        if (!extendedDiagnosisInformation) {
+            throw new Error("Could not find anything with that diagnosis code")
+        } else {
+            return <span>
+                <span> {extendedDiagnosisInformation.code}: </span>
+                <span> {extendedDiagnosisInformation.name} </span>
+                {extendedDiagnosisInformation.latin
+                    ? <span> ({extendedDiagnosisInformation.latin}) </span>
+                    : null
+                }
+            </span>
+        }
+    }
+
+    if (!expandedPatientInformation) {
+        return (
+            <div>
+                Nothing to see here yet.
+            </div>
+        )
+    }
     
     return (
         <div>
@@ -48,7 +74,7 @@ const IndividualPatient:React.FunctionComponent<
                             ? <p> No diagnoses to show. </p>
                             : entry.diagnosisCodes.map(diagnosisCode =>
                                 <li key = {diagnosisCode}>
-                                    {diagnosisCode}
+                                    {getDiagnosis(diagnosisCode)}
                                 </li>
                             )
                         }

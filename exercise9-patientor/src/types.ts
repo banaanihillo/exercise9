@@ -45,10 +45,50 @@ export interface Patient {
     entries: Entry[];
 }
 
-export type SecurePatient = Omit<Patient, "ssn">;
+export type SecurePatient = Omit<Patient, "ssn" | "entries">;
 
 export type NewDiaryEntry = Omit<DiaryEntry, "id">;
 
-export interface Entry {
-    
+export type Entry = (HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry)
+
+interface EntryTemplate {
+    id: string;
+    date: string;
+    type: ("HealthCheck" | "Hospital" | "OccupationalHealthcare");
+    specialist: string;
+    description: string;
+    diagnosisCodes?: Array<Diagnosis["code"]>;
+}
+
+export enum HealthCheckRating {
+    "Healthy" = 0,
+    "LowRisk" = 1,
+    "HighRisk" = 2,
+    "CriticalRisk" = 3
+}
+
+interface HealthCheckEntry extends EntryTemplate {
+    type: "HealthCheck";
+    healthCheckRating: HealthCheckRating;
+}
+
+interface HospitalEntry extends EntryTemplate {
+    type: "Hospital";
+    discharge: Discharge;
+}
+
+interface Discharge {
+    date: string;
+    criteria: string;
+}
+
+interface OccupationalHealthcareEntry extends EntryTemplate {
+    type: "OccupationalHealthcare";
+    employerName: string;
+    sickLeave?: SickLeave;
+}
+
+interface SickLeave {
+    startDate: string;
+    endDate: string;
 }

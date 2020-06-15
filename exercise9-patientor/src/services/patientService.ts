@@ -3,14 +3,13 @@ import {SecurePatient, Patient} from "../types";
 
 const getSecureEntries = (): SecurePatient[] => {
     const securePatients = patients.map(({
-        id, name, dateOfBirth, gender, occupation, entries
+        id, name, dateOfBirth, gender, occupation
     }) => ({
         id,
         name,
         dateOfBirth,
         gender,
-        occupation,
-        entries
+        occupation
     }))
     return securePatients;
 };

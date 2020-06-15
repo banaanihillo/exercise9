@@ -36,6 +36,24 @@ const IndividualPatient:React.FunctionComponent<
             <p> Assigned gender: {expandedPatientInformation.gender} </p>
             <p> Occupation: {expandedPatientInformation.occupation} </p>
             <p> Social security number: {expandedPatientInformation.ssn} </p>
+
+            <h3> Entries </h3>
+            { (!expandedPatientInformation.entries)
+                ? <p> Expanded patient information is unavailable for some reason. </p>
+                : expandedPatientInformation.entries.map(entry =>
+                    <span key = {entry.id}>
+                        <h4> {entry.date} </h4>
+                        <p> {entry.description} </p>
+                        { (entry.diagnosisCodes === undefined)
+                            ? <p> No diagnoses to show. </p>
+                            : entry.diagnosisCodes.map(diagnosisCode =>
+                                <li key = {diagnosisCode}>
+                                    {diagnosisCode}
+                                </li>
+                            )
+                        }
+                    </span>
+            )}
         </div>
     )
 }

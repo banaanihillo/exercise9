@@ -1,6 +1,6 @@
 import express from "express";
 import patientService from "../services/patientService";
-import {parsePatientInput} from "../utils";
+import {parsePatientInput, validateEntry} from "../utils";
 
 const patientRouter = express.Router();
 
@@ -24,6 +24,20 @@ patientRouter.post("/", (request, response) => {
 
 patientRouter.get("/:id", (request, response) => {
     response.send(patientService.getPatientInformation(request.params.id))
+})
+
+patientRouter.post("/:id/entries", (request, response) => {
+    try {
+        const entryInput = {
+            id: (Math.ceil(Math.random() * 1000000000) + "ananas"),
+            ...request.body
+        }
+        const validatedInput = validateEntry(entryInput)
+        const newEntry = patientService.addEntry(request.params.id, validatedInput);
+        response.json(newEntry);
+    } catch (error) {
+        response.status(400).send(error.message);
+    }
 })
 
 export default patientRouter;

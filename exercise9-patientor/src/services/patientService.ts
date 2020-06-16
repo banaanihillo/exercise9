@@ -1,5 +1,5 @@
 import patients from "../data/patients";
-import {SecurePatient, Patient} from "../types";
+import {SecurePatient, Patient, Entry} from "../types";
 
 const getSecureEntries = (): SecurePatient[] => {
     const securePatients = patients.map(({
@@ -33,8 +33,18 @@ const getPatientInformation = (id: string): Patient => {
     }
 }
 
+const addEntry = (idOfPatient: string, newEntry: Entry): Entry => {
+    const foundPatient = patients.find(patient => patient.id === idOfPatient)
+    if (!foundPatient) {
+        throw new Error("Could not find that patient for some reason.")
+    }
+    foundPatient.entries.push(newEntry);
+    return newEntry;
+}
+
 export default {
     getSecureEntries,
     addPatient,
-    getPatientInformation
+    getPatientInformation,
+    addEntry
 };

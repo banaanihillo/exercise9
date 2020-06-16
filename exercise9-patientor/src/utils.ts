@@ -1,5 +1,5 @@
 //eslint-disable @typescript-eslint/no-explicit-any
-import {NewDiaryEntry, Weather, Visibility, Gender, Patient} from "./types";
+import {NewDiaryEntry, Weather, Visibility, Gender, Patient, Entry} from "./types";
 
 const parseComment = (comment: any): string => {
     if (!comment || !isString(comment)) {
@@ -10,6 +10,10 @@ const parseComment = (comment: any): string => {
 
 const isString = (text: any): text is string => {
     return (typeof text === "string" || text instanceof String);
+}
+
+const isNumber = (number: any): number is Number => {
+    return (typeof number === "number" || number instanceof Number)
 }
 
 const isDate = (date: string): boolean => {
@@ -75,6 +79,50 @@ export const parsePatientInput = (patientInput: any): Patient => {
     }
 }
 
+export const validateEntry = (entryInput: any): Entry => {
+    switch (entryInput.type) {
+        case "HealthCheck":
+            if (!entryInput.healthCheckRating || !isNumber(entryInput.healthCheckRating)) {
+                throw new Error("Health check rating requires a number input.")
+            } else {
+                return entryInput
+            }
+        case "OccupationalHealthcare":
+            if (!entryInput.employerName || !isString(entryInput.employerName)) {
+                throw new Error("Employer name requires a string input.")
+            } else {
+                return entryInput
+            }
+        case "Hospital":
+            if (!entryInput.discharge
+                || !isString(entryInput.discharge.date)
+                || !isString(entryInput.discharge.criteria)
+            ) {
+                throw new Error("Discharge, including date and criteria, is required.")
+            } else {
+                return entryInput
+            }
+        default:
+            throw new Error("Looks like the medical entry type is incorrectly defined.")
+    }
+}
+/*
+export const newValidEntry = (entryInput: Entry): Entry => {
+    const validatedEntry = validateEntry(entryInput);
+    if (!validatedEntry.diagnosisCodes) {
+        console.log("Yep, codes exist alright")
+    }
+    const propertiesInCommon = {
+        id: validatedEntry.id,
+        date: parseString(validatedEntry.date),
+        specialist: parseString(validatedEntry.specialist),
+        description: parseString(validatedEntry.description),
+        type: validatedEntry.type
+    }
+    console.log(propertiesInCommon)
+    return validatedEntry
+}
+*/
 const toNewDiaryEntry = (diaryInput: any): NewDiaryEntry => {
     return {
         date: parseDate(diaryInput.date),

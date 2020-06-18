@@ -35,6 +35,13 @@ interface EntryTemplate {
     diagnosisCodes?: Array<Diagnosis["code"]>;
 }
 
+export type HealthCheckThing = Omit<HealthCheckEntry, "id">
+
+export interface EntryProps {
+    onSubmit: (values: HealthCheckThing) => void;
+    onCancel: () => void;
+}
+
 export enum HealthCheckRating {
     "Healthy" = 0,
     "LowRisk" = 1,

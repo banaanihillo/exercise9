@@ -82,7 +82,7 @@ export const parsePatientInput = (patientInput: any): Patient => {
 export const validateEntry = (entryInput: any): Entry => {
     switch (entryInput.type) {
         case "HealthCheck":
-            if (!entryInput.healthCheckRating || !isNumber(entryInput.healthCheckRating)) {
+            if (!isNumber(entryInput.healthCheckRating)) {
                 throw new Error("Health check rating requires a number input.")
             } else {
                 return entryInput

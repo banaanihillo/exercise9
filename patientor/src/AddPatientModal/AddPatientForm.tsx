@@ -3,7 +3,7 @@ import { Grid, Button } from "semantic-ui-react";
 import { Field, Formik, Form } from "formik";
 
 import { TextField, SelectField, GenderOption } from "./FormField";
-import { Gender, Patient } from "../types";
+import {Gender, Patient} from "../types";
 
 /*
  * use type Patient, but omit id and entries,
@@ -17,9 +17,18 @@ interface Props {
 }
 
 const genderOptions: GenderOption[] = [
-  { value: Gender.Male, label: "Male" },
-  { value: Gender.Female, label: "Female" },
-  { value: Gender.Other, label: "Other" }
+    {
+        value: Gender.Male,
+        label: "Male"
+    },
+    {
+        value: Gender.Female,
+        label: "Female"
+    },
+    {
+        value: Gender.Other,
+        label: "Other"
+    }
 ];
 
 export const AddPatientForm: React.FC<Props> = ({ onSubmit, onCancel }) => {

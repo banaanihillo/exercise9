@@ -33,13 +33,13 @@ const getPatientInformation = (id: string): Patient => {
     }
 }
 
-const addEntry = (idOfPatient: string, newEntry: Entry): Entry => {
-    const foundPatient = patients.find(patient => patient.id === idOfPatient)
-    if (!foundPatient) {
+const addEntry = (idOfPatient: string, newEntry: Entry): Patient => {
+    const patientToUpdate = patients.find(patient => patient.id === idOfPatient)
+    if (!patientToUpdate) {
         throw new Error("Could not find that patient for some reason.")
     }
-    foundPatient.entries.push(newEntry);
-    return newEntry;
+    patientToUpdate.entries.push(newEntry);
+    return patientToUpdate;
 }
 
 export default {

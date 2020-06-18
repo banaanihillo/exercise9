@@ -1,17 +1,19 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {RouteComponentProps} from "react-router-dom";
 import axios from "axios";
 import {apiBaseUrl} from "../constants";
-import {Patient, PatientProps} from "../types";
+import {Patient, PatientProps, HealthCheckThing} from "../types";
 import {useStateValue} from "../state";
-import {expandPatient} from "../state/reducer";
+import {expandPatient, addEntry} from "../state/reducer";
 import EntryDetails from "./EntryDetails";
+import AddThingModal from "./AddThingModal";
 
 const IndividualPatient:React.FunctionComponent<
     RouteComponentProps<PatientProps>
 > = (props) => {
     const {match} = props;
     const [state, dispatch] = useStateValue();
+    const [modal, toggleModal] = useState<boolean>(false)
     const expandedPatientInformation = state.patients[match.params.id]
 
     useEffect(() => {
@@ -55,6 +57,23 @@ const IndividualPatient:React.FunctionComponent<
             </div>
         )
     }
+
+    const onCancel = () => {
+        toggleModal(false)
+    }
+
+    const submitNewEntry = async (values: HealthCheckThing) => {
+        try {
+            const updatedPatient = await axios.post<Patient>(
+                `${apiBaseUrl}/patients/${match.params.id}/entries`,
+                values
+            )
+            dispatch(addEntry(updatedPatient.data))
+            toggleModal(false)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     
     return (
         <div>
@@ -82,6 +101,14 @@ const IndividualPatient:React.FunctionComponent<
                         }
                     </span>
             )}
+            <AddThingModal
+                submitNewEntry = {submitNewEntry}
+                onClose = {onCancel}
+                modalOpen = {modal}
+            />
+            <button onClick = {() => toggleModal(true)}>
+                Add a new entry
+            </button>
         </div>
     )
 }

@@ -51,6 +51,11 @@ export type NewDiaryEntry = Omit<DiaryEntry, "id">;
 
 export type Entry = (HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry)
 
+export interface EntryWithPatient {
+    patient: Patient;
+    entry: Entry;
+}
+
 interface EntryTemplate {
     id: string;
     date: string;

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {RouteComponentProps} from "react-router-dom";
 import axios from "axios";
 import {apiBaseUrl} from "../constants";
-import {Patient, PatientProps, HealthCheckThing} from "../types";
+import {Patient, PatientProps, EntryTemplate} from "../types";
 import {useStateValue} from "../state";
 import {expandPatient, addEntry} from "../state/reducer";
 import EntryDetails from "./EntryDetails";
@@ -67,7 +67,7 @@ const IndividualPatient:React.FunctionComponent<
         setErrorMessage(undefined)
     }
 
-    const submitNewEntry = async (values: HealthCheckThing) => {
+    const submitNewEntry = async (values: EntryTemplate) => {
         try {
             const updatedPatient = await axios.post<Patient>(
                 `${apiBaseUrl}/patients/${match.params.id}/entries`,

@@ -26,7 +26,7 @@ export interface PatientProps {
 
 export type Entry = (HealthCheckEntry | HospitalEntry | OccupationalHealthcareEntry)
 
-interface EntryTemplate {
+export interface EntryTemplate {
     id: string;
     date: string;
     type: ("HealthCheck" | "Hospital" | "OccupationalHealthcare");
@@ -35,10 +35,21 @@ interface EntryTemplate {
     diagnosisCodes?: Array<Diagnosis["code"]>;
 }
 
+export type EntryOption = {
+    value: Entry["type"];
+    label: string;
+};
+
+export type TypeSelectionProps = {
+    name: string;
+    label: string;
+    options: EntryOption[];
+};
+
 export type HealthCheckThing = Omit<HealthCheckEntry, "id">
 
 export interface EntryProps {
-    onSubmit: (values: HealthCheckThing) => void;
+    handleEntrySubmission: (values: EntryTemplate) => void;
     onCancel: () => void;
 }
 

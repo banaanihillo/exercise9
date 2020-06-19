@@ -90,17 +90,36 @@ export const validateEntry = (entryInput: any): Entry => {
         case "OccupationalHealthcare":
             if (!entryInput.employerName || !isString(entryInput.employerName)) {
                 throw new Error("Employer name requires a string input.")
+            } else if (entryInput.sickLeaveStartDate && entryInput.sickLeaveEndDate) {
+                return {
+                    ...entryInput,
+                    sickLeave: {
+                        startDate: entryInput.sickLeaveStartDate,
+                        endDate: entryInput.sickLeaveEndDate
+                    }
+                }
+            } else if (
+                (entryInput.sickLeaveStartDate && !entryInput.sickLeaveEndDate)
+                || (!entryInput.sickLeaveStartDate && entryInput.sickLeaveEndDate)
+                ) {
+                    throw new Error("Sick leave should include start date and end date.")
             } else {
                 return entryInput
             }
         case "Hospital":
-            if (!entryInput.discharge
-                || !isString(entryInput.discharge.date)
-                || !isString(entryInput.discharge.criteria)
+            if (
+                !isString(entryInput.dischargeDate)
+                || !isString(entryInput.dischargeCriteria)
             ) {
                 throw new Error("Discharge, including date and criteria, is required.")
             } else {
-                return entryInput
+                return {
+                    ...entryInput,
+                    discharge: {
+                        date: entryInput.dischargeDate,
+                        criteria: entryInput.dischargeCriteria
+                    }
+                }
             }
         default:
             throw new Error("Looks like the medical entry type is incorrectly defined.")

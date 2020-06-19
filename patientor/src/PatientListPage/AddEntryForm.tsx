@@ -17,6 +17,7 @@ interface HealthThingProps {
 const AddEntryForm: React.FunctionComponent<HealthThingProps> = (props) => {
     const {handleEntrySubmission, onCancel} = props
     const [state] = useStateValue()
+    //type should probably be a select field as well, right
     return (
         <Formik
             initialValues = {{
@@ -27,8 +28,31 @@ const AddEntryForm: React.FunctionComponent<HealthThingProps> = (props) => {
                 healthCheckRating: 0
             }}
             onSubmit = {handleEntrySubmission}
+            validate = {values => {
+                const requirementError = "This is a required field."
+                const typeRequirement = `
+                    Type should be one of the following:
+                    HealthCheck, Hospital, or OccupationalHealthcare.
+                `
+                const errors: {
+                    [field: string]: string
+                } = {};
+                if (!values.type) {
+                    errors.name = typeRequirement
+                }
+                if (!values.date) {
+                    errors.date = requirementError
+                }
+                if (!values.specialist) {
+                    errors.specialist = requirementError
+                }
+                if (!values.description) {
+                    errors.description = requirementError
+                }
+                return errors
+            }}
         >
-            {({setFieldValue, setFieldTouched, values}) => {
+            {({setFieldValue, setFieldTouched, values, isValid, dirty}) => {
                 return (
                     <Form>
                         <Field
@@ -70,7 +94,10 @@ const AddEntryForm: React.FunctionComponent<HealthThingProps> = (props) => {
                                 </Button>
                             </Grid.Column>
                             <Grid.Column floated = "right" width = {5}>
-                                <Button onClick = {() => handleEntrySubmission(values)}>
+                                <Button
+                                    onClick = {() => handleEntrySubmission(values)}
+                                    disabled = {!dirty || !isValid}
+                                >
                                     Submit
                                 </Button>
                             </Grid.Column>

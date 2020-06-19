@@ -14,6 +14,7 @@ const IndividualPatient:React.FunctionComponent<
     const {match} = props;
     const [state, dispatch] = useStateValue();
     const [modal, toggleModal] = useState<boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<string | undefined>()
     const expandedPatientInformation = state.patients[match.params.id]
 
     useEffect(() => {
@@ -60,6 +61,10 @@ const IndividualPatient:React.FunctionComponent<
 
     const onCancel = () => {
         toggleModal(false)
+        //what do you mean undefined, it's defined alright
+        //if you explicitly set something to undefined, it's now defined
+        //the type definition should be <string | null | undefined>, right
+        setErrorMessage(undefined)
     }
 
     const submitNewEntry = async (values: HealthCheckThing) => {
@@ -72,6 +77,7 @@ const IndividualPatient:React.FunctionComponent<
             toggleModal(false)
         } catch (error) {
             console.log(error)
+            setErrorMessage(error)
         }
     }
     
@@ -105,6 +111,7 @@ const IndividualPatient:React.FunctionComponent<
                 submitNewEntry = {submitNewEntry}
                 onClose = {onCancel}
                 modalOpen = {modal}
+                error = {errorMessage}
             />
             <button onClick = {() => toggleModal(true)}>
                 Add a new entry

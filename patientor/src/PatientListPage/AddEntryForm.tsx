@@ -8,12 +8,31 @@ import {
 } from "../AddPatientModal/FormField";
 import {useStateValue} from "../state";
 import {EntryProps, TypeSelectionProps, EntryOption} from "../types";
-/*
-interface HealthThingProps {
-    handleEntrySubmission: (values: HealthCheckThing) => void
-    onCancel: () => void
+
+const validateHealthCheck = (value: any) => {
+    let healthCheckError;
+    if (value !== 0 && !value) {
+        healthCheckError = "Health check rating is required."
+    }
+    return healthCheckError;
 }
-*/
+
+const validateDischarge = (value: any) => {
+    let dischargeError;
+    if (!value) {
+        dischargeError = "Discharge date and criteria are required."
+    }
+    return dischargeError;
+}
+
+const validateEmployerName = (value: any) => {
+    let employerNameError;
+    if (!value) {
+        employerNameError = "Employer name is required."
+    }
+    return employerNameError;
+}
+
 const entrySpecificFields = (type: EntryOption["value"]) => {
     switch (type) {
         case "HealthCheck":
@@ -24,6 +43,7 @@ const entrySpecificFields = (type: EntryOption["value"]) => {
                 component = {NumberField}
                 min = {0}
                 max = {3}
+                validate = {validateHealthCheck}
             />
         case "Hospital":
             return <span>
@@ -32,12 +52,14 @@ const entrySpecificFields = (type: EntryOption["value"]) => {
                     placeholder = "Discharge date (YYYY-MM-DD)"
                     name = "dischargeDate"
                     component = {TextField}
+                    validate = {validateDischarge}
                 />
                 <Field
                     label = "Discharge criteria"
                     placeholder = "Discharge criteria"
                     name = "dischargeCriteria"
                     component = {TextField}
+                    validate = {validateDischarge}
                 />
             </span>
         case "OccupationalHealthcare":
@@ -47,6 +69,7 @@ const entrySpecificFields = (type: EntryOption["value"]) => {
                     placeholder = "Employer name"
                     name = "employerName"
                     component = {TextField}
+                    validate = {validateEmployerName}
                 />
                 <Field
                     label = "Start of sick leave"
@@ -108,8 +131,7 @@ const AddEntryForm: React.FunctionComponent<EntryProps> = (props) => {
                 type: "HealthCheck",
                 date: "",
                 specialist: "",
-                description: "",
-                id: `${Math.ceil(Math.random() * 333333)}`
+                description: ""
             }}
             onSubmit = {handleEntrySubmission}
             validate = {values => {

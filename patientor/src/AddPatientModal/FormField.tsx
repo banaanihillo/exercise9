@@ -38,18 +38,18 @@ interface TextProps extends FieldProps {
   placeholder: string;
 }
 
-export const TextField: React.FC<TextProps> = ({
-  field,
-  label,
-  placeholder
-}) => (
-  <Form.Field>
-    <label>{label}</label>
-    <Field placeholder={placeholder} {...field} />
-    <div style={{ color:'red' }}>
-      <ErrorMessage name={field.name} />
-    </div>
-  </Form.Field>
+export const TextField: React.FC<TextProps> = ({field, label, placeholder}) => (
+    <Form.Field>
+        <label> {label} </label>
+        <Field
+            placeholder = {placeholder}
+            {...field}
+            value = {field.value || ""}
+        />
+        <div style = {{color:"red"}}>
+            <ErrorMessage name = {field.name} />
+        </div>
+    </Form.Field>
 );
 
 /*
@@ -60,17 +60,27 @@ interface NumberProps extends FieldProps {
   errorMessage?: string;
   min: number;
   max: number;
+  placeholder: string;
 }
 
-export const NumberField: React.FC<NumberProps> = ({ field, label, min, max }) => (
-  <Form.Field>
-    <label>{label}</label>
-    <Field {...field} type='number' min={min} max={max} />
+export const NumberField: React.FC<NumberProps> = ({
+    field, label, min, max, placeholder
+}) => (
+    <Form.Field>
+        <label> {label} </label>
+        <Field
+            {...field}
+            type = "number"
+            min = {min}
+            max = {max}
+            placeholder = {placeholder}
+            value = {(!field.value && field.value !== 0) ? "" : field.value}
+        />
 
-    <div style={{ color:'red' }}>
-      <ErrorMessage name={field.name} />
-    </div>
-  </Form.Field>
+        <div style = {{color:"red"}}>
+            <ErrorMessage name = {field.name} />
+        </div>
+    </Form.Field>
 );
 
 export const DiagnosisSelection = ({

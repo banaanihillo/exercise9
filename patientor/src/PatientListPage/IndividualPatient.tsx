@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {RouteComponentProps} from "react-router-dom";
 import axios from "axios";
 import {apiBaseUrl} from "../constants";
-import {Patient, PatientProps, EntryTemplate} from "../types";
+import {Patient, PatientProps, EntryTemplateProps} from "../types";
 import {useStateValue} from "../state";
 import {expandPatient, addEntry} from "../state/reducer";
 import EntryDetails from "./EntryDetails";
@@ -61,13 +61,11 @@ const IndividualPatient:React.FunctionComponent<
 
     const onCancel = () => {
         toggleModal(false)
-        //what do you mean undefined, it's defined alright
-        //if you explicitly set something to undefined, it's now defined
-        //the type definition should be <string | null | undefined>, right
+        
         setErrorMessage(undefined)
     }
 
-    const submitNewEntry = async (values: EntryTemplate) => {
+    const submitNewEntry = async (values: EntryTemplateProps) => {
         try {
             const updatedPatient = await axios.post<Patient>(
                 `${apiBaseUrl}/patients/${match.params.id}/entries`,

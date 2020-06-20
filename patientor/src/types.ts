@@ -46,10 +46,10 @@ export type TypeSelectionProps = {
     options: EntryOption[];
 };
 
-export type HealthCheckThing = Omit<HealthCheckEntry, "id">
+export type EntryTemplateProps = Omit<EntryTemplate, "id">
 
 export interface EntryProps {
-    handleEntrySubmission: (values: EntryTemplate) => void;
+    handleEntrySubmission: (values: EntryTemplateProps) => void;
     onCancel: () => void;
 }
 
